@@ -40,7 +40,6 @@ fs = sc._jvm.org.apache.hadoop.fs.FileSystem.get(
 )
 if fs.exists(sc._jvm.org.apache.hadoop.fs.Path("dpc-covid19-ita-region")):
     yesterday_data = spark.read.parquet("gs://%s/dpc-covid19-ita-region" % bucket_name).where(F.col("date") == yesterday)
-    yesterday_data.show()
     joined = df_by_region.join(yesterday_data,
                                yesterday_data.denominazione_regione == df_by_region.denominazione_regione, how='left')
     region_recap_df = joined.withColumn("delta",
