@@ -35,11 +35,11 @@ df_by_region = small_source_df.groupBy("codice_regione").agg(
 # compute deltas with old data if any
 sc = spark.sparkContext
 fs = sc._jvm.org.apache.hadoop.fs.FileSystem.get(
-    sc._jvm.java.net.URI.create("gs://hpc_covid19_etl"),
+    sc._jvm.java.net.URI.create("gs://%s" % bucket_name),
     sc._jsc.hadoopConfiguration(),
 )
 if fs.exists(sc._jvm.org.apache.hadoop.fs.Path("dpc-covid19-ita-region")):
-    yesterday_data = spark.read.parquet("gs://hpc_covid19_etl/dpc-covid19-ita-region").where(F.col("date") == yesterday)
+    yesterday_data = spark.read.parquet("gs://%s/dpc-covid19-ita-region" % bucket_name).where(F.col("date") == yesterday)
     yesterday_data.show()
     joined = df_by_region.join(yesterday_data,
                                yesterday_data.denominazione_regione == df_by_region.denominazione_regione, how='left')

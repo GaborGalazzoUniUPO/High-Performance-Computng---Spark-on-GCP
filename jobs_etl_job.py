@@ -40,7 +40,7 @@ small_source_df.write \
     .partitionBy("data", "stato", "codice_regione", "codice_provincia") \
     .mode("append") \
     .option("mergeSchema", "true") \
-    .parquet("gs://hpc_covid19_etl/dpc-covid19-ita-province")
+    .parquet("gs://%s/dpc-covid19-ita-province" % bucket_name)
 
 # cleanup
 os.popen('gsutil rm gs://%s/dpc-covid19-ita-province-%s.csv' % (bucket_name, today)).read()
