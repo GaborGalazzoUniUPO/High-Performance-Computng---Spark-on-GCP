@@ -66,4 +66,4 @@ for row in recap:
 with open('data.json', 'w') as outfile:
     json.dump(json_recap, outfile)
     outfile.close()
-    os.popen('gsutil mv data.json gs://%s/dpc-covid19-ita-region-%s.json' % (bucket_name, today)).read()
+    os.popen("gsutil mv data.json gs://%s/dpc-covid19-ita-region-recap.json" % bucket_name).read()
