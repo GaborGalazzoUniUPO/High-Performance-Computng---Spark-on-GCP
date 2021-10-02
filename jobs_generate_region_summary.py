@@ -43,7 +43,6 @@ if fs.exists(sc._jvm.org.apache.hadoop.fs.Path("dpc-covid19-ita-region")):
     yesterday_data.show()
     joined = df_by_region.join(yesterday_data,
                                yesterday_data.denominazione_regione == df_by_region.denominazione_regione, how='left')
-    joined.show()
     region_recap_df = joined.withColumn("delta",
                                         df_by_region.totale_casi - F.when(yesterday_data.totale_casi.isNull(),
                                                                           0).otherwise(yesterday_data.totale_casi)) \
